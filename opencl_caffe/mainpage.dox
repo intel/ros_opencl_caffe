@@ -1,0 +1,23 @@
+/**
+@mainpage
+@htmlinclude manifest.html
+
+
+@b %opencl_caffe is a ROS wrapper for <a href="https://github.com/01org/caffe/wiki/clCaffe"> clCaffe </a>. It depends on:
+
+- <a href="https://github.com/01org/caffe/wiki/clCaffe"> clCaffe </a>
+- <a href="https://github.intel.com/otc-rse/AMR_ros_object_msgs"> ros_object_msgs </a>
+
+@b %opencl_caffe includes:
+
+- A nodelet which subscribe image messages, and publish each object information inferred
+- A service which provide a interface of inferring a image
+
+@section codeapi Code API
+
+- Base class: opencl_caffe::Detector
+- GPU inference implementation: opencl_caffe::DetectorGpu
+- Nodelet: opencl_caffe::Nodelet
+- Service: opencl_caffe::Srv
+
+*/

@@ -1,0 +1,3 @@
+net_config_path:  "/opt/clCaffe/models/yolo/yolo416/yolo_fused_deploy.prototxt"
+weights_path:     "/opt/clCaffe/models/yolo/yolo416/fused_yolo.caffemodel"
+labels_path:      "/opt/clCaffe/data/yolo/voc.txt"
