@@ -41,17 +41,13 @@ Srv::Srv(ros::NodeHandle& n)
   service_ = n.advertiseService("run_inference", &Srv::handleService, this);
 }
 
-bool Srv::handleService(opencl_caffe::Inference::Request& req, opencl_caffe::Inference::Response& resp)
+bool Srv::handleService(object_msgs::DetectObject::Request& req, object_msgs::DetectObject::Response& resp)
 {
-  resp.status = -1;
   sensor_msgs::ImagePtr image = boost::make_shared<sensor_msgs::Image>(req.image);
-  if (detector_->runInference(image, resp.objs))
+  if (!detector_->runInference(image, resp.objects))
   {
-    resp.status = 0;
-  }
-  else
-  {
-    ROS_ERROR("Inference failed.");
+    ROS_ERROR("Detect object failed.");
+    return false;
   }
   return true;
 }

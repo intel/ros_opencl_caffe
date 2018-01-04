@@ -18,7 +18,7 @@
 #define OPENCL_CAFFE_SRV_H
 
 #include <string>
-#include <opencl_caffe/Inference.h>
+#include <object_msgs/DetectObject.h>
 #include "opencl_caffe/detector.h"
 
 namespace opencl_caffe
@@ -50,7 +50,7 @@ public:
    * @param[in]   req   Request of service
    * @param[out]  resp  Response of service
    */
-  bool handleService(opencl_caffe::Inference::Request& req, opencl_caffe::Inference::Response& resp);
+  bool handleService(object_msgs::DetectObject::Request& req, object_msgs::DetectObject::Response& resp);
   /**
    * Load resources for detector.
    *

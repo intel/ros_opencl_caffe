@@ -19,7 +19,6 @@
 
 #include <string>
 #include <nodelet/nodelet.h>
-#include <opencl_caffe/Inference.h>
 #include "opencl_caffe/detector.h"
 
 namespace opencl_caffe
