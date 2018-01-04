@@ -24,7 +24,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <ros/package.h>
 #include <ros/ros.h>
-#include <opencl_caffe/Inference.h>
+#include <object_msgs/DetectObject.h>
 
 std::string matType2Encoding(int mat_type)
 {
@@ -58,14 +58,14 @@ void convertFrameToMessage(const cv::Mat* frame, size_t frame_id, sensor_msgs::I
 TEST(UnitTestSrv, testSrv)
 {
   ros::NodeHandle n;
-  ros::ServiceClient client = n.serviceClient<opencl_caffe::Inference>("opencl_caffe/opencl_caffe_srv/run_inference");
-  opencl_caffe::Inference inf;
+  ros::ServiceClient client = n.serviceClient<object_msgs::DetectObject>("opencl_caffe/opencl_caffe_srv/run_inference");
+  object_msgs::DetectObject inf;
 
   cv::Mat image = cv::imread(ros::package::getPath("opencl_caffe") + "/resources/cat.jpg");
   convertFrameToMessage(&image, 0, &inf.request.image);
   client.waitForExistence(ros::Duration(60));
   ASSERT_TRUE(client.call(inf));
-  ASSERT_GE(inf.response.objs.objects_vector.size(), 1);
+  ASSERT_GE(inf.response.objects.objects_vector.size(), 1);
 }
 
 int main(int argc, char** argv)

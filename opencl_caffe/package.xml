@@ -21,7 +21,6 @@ limitations under the License.
 
   <license>Apache 2.0</license>
 
-  <build_depend>message_generation</build_depend>
   <build_depend>roslib</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
@@ -38,7 +37,6 @@ limitations under the License.
   <run_depend>nodelet</run_depend>
   <run_depend>pluginlib</run_depend>
   <run_depend>rostest</run_depend>
-  <run_depend>message_runtime</run_depend>
   <buildtool_depend>catkin</buildtool_depend>
 
   <export>

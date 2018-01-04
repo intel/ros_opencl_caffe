@@ -21,7 +21,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   object_msgs
-  message_generation
   cv_bridge
   roslint
   pluginlib
@@ -72,20 +71,10 @@ if(UNIX OR APPLE)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
 endif()
 
-add_service_files(
-   FILES
-   Inference.srv
- )
-
-generate_messages(
-  DEPENDENCIES
-  object_msgs
-)
-
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES opencl_caffe
-  CATKIN_DEPENDS roslib roscpp sensor_msgs std_msgs object_msgs message_runtime
+  CATKIN_DEPENDS roslib roscpp sensor_msgs std_msgs object_msgs
 )
 
 include_directories(
