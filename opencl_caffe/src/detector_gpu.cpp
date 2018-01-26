@@ -187,7 +187,7 @@ int DetectorGpu::inference(std::shared_ptr<caffe::Net<Dtype>>& net, std::vector<
     cv::cvtColor(cv_bridge::toCvShare(image_msg, "rgb8")->image, image, cv::COLOR_RGB2BGR);
     initInputBlob(resizeImage(image), input_channels);
     net->Forward();
-    boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
+    boost::posix_time::ptime end = boost::posix_time::microsec_clock::local_time();
     boost::posix_time::time_duration msdiff = end - start;
 
     caffe::Blob<Dtype>* result_blob = net->output_blobs()[0];
