@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-#include <chrono>
 #include <string>
 #include <vector>
 #include <cv_bridge/cv_bridge.h>
@@ -184,11 +183,12 @@ int DetectorGpu::inference(std::shared_ptr<caffe::Net<Dtype>>& net, std::vector<
   {
     cv::Mat image;
 
-    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+    boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
     cv::cvtColor(cv_bridge::toCvShare(image_msg, "rgb8")->image, image, cv::COLOR_RGB2BGR);
     initInputBlob(resizeImage(image), input_channels);
     net->Forward();
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    boost::posix_time::ptime end = boost::posix_time::microsec_clock::local_time();
+    boost::posix_time::time_duration msdiff = end - start;
 
     caffe::Blob<Dtype>* result_blob = net->output_blobs()[0];
     const Dtype* result = result_blob->cpu_data();
@@ -236,7 +236,7 @@ int DetectorGpu::inference(std::shared_ptr<caffe::Net<Dtype>>& net, std::vector<
     }
 
     objects.header = image_msg->header;
-    objects.inference_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    objects.inference_time_ms = msdiff.total_milliseconds();
     return true;
   }
   catch (cv_bridge::Exception& e)
