@@ -23,9 +23,17 @@ limitations under the License.
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roslaunch</build_depend>
+  <build_depend>nodelet</build_depend>
+  <build_depend>usb_cam</build_depend>
+  <build_depend>openni_launch</build_depend>
+  <build_depend>realsense_ros_camera</build_depend>
   <build_depend>opencl_caffe</build_depend>
   <build_depend>opencl_caffe_viewer</build_depend>
   <run_depend>roslaunch</run_depend>
+  <run_depend>nodelet</run_depend>
+  <run_depend>usb_cam</run_depend>
+  <run_depend>openni_launch</run_depend>
+  <run_depend>realsense_ros_camera</run_depend>
   <run_depend>opencl_caffe</run_depend>
   <run_depend>opencl_caffe_viewer</run_depend>
 </package>
