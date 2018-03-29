@@ -26,46 +26,19 @@
 #include <ros/ros.h>
 #include <object_msgs/DetectObject.h>
 
-std::string matType2Encoding(int mat_type)
-{
-  switch (mat_type)
-  {
-    case CV_8UC1:
-      return "mono8";
-    case CV_8UC3:
-      return "bgr8";
-    case CV_16SC1:
-      return "mono16";
-    case CV_8UC4:
-      return "rgba8";
-    default:
-      throw std::runtime_error("Unsupported encoding type");
-  }
-}
-
-void convertFrameToMessage(const cv::Mat* frame, size_t frame_id, sensor_msgs::Image* image_msg)
-{
-  image_msg->height = frame->rows;
-  image_msg->width = frame->cols;
-  image_msg->encoding = matType2Encoding(frame->type());
-  image_msg->step = static_cast<sensor_msgs::Image::_step_type>(frame->step);
-  size_t size = frame->step * frame->rows;
-  image_msg->data.resize(size);
-  memcpy(&image_msg->data[0], frame->data, size);
-  image_msg->header.frame_id = std::to_string(frame_id);
-}
-
 TEST(UnitTestSrv, testSrv)
 {
   ros::NodeHandle n;
   ros::ServiceClient client = n.serviceClient<object_msgs::DetectObject>("opencl_caffe/opencl_caffe_srv/run_inference");
   object_msgs::DetectObject inf;
 
-  cv::Mat image = cv::imread(ros::package::getPath("opencl_caffe") + "/resources/cat.jpg");
-  convertFrameToMessage(&image, 0, &inf.request.image);
-  client.waitForExistence(ros::Duration(60));
+  inf.request.image_paths.push_back(ros::package::getPath("opencl_caffe") + "/resources/cat.jpg");
+  inf.request.image_paths.push_back(ros::package::getPath("opencl_caffe") + "/resources/cat.jpg");
+  client.waitForExistence(ros::Duration(120));
   ASSERT_TRUE(client.call(inf));
-  ASSERT_GE(inf.response.objects.objects_vector.size(), 1);
+  ASSERT_TRUE(inf.response.objects.size() == 2);
+  ASSERT_GE(inf.response.objects[0].objects_vector.size(), 1);
+  ASSERT_GE(inf.response.objects[1].objects_vector.size(), 1);
 }
 
 int main(int argc, char** argv)
