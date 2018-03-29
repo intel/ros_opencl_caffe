@@ -62,7 +62,7 @@ bool Srv::handleService(object_msgs::DetectObject::Request& req, object_msgs::De
 
     resp.objects.push_back(objects);
   }
-  
+
   return true;
 }
 

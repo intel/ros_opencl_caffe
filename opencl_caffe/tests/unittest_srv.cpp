@@ -36,7 +36,7 @@ TEST(UnitTestSrv, testSrv)
   inf.request.image_paths.push_back(ros::package::getPath("opencl_caffe") + "/resources/cat.jpg");
   client.waitForExistence(ros::Duration(120));
   ASSERT_TRUE(client.call(inf));
-  ASSERT_TRUE(inf.response.objects.size() == 2);
+  ASSERT_EQ(inf.response.objects.size(), 2);
   ASSERT_GE(inf.response.objects[0].objects_vector.size(), 1);
   ASSERT_GE(inf.response.objects[1].objects_vector.size(), 1);
 }
