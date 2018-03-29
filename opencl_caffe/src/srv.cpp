@@ -15,6 +15,7 @@
  */
 
 #include <string>
+#include <cv_bridge/cv_bridge.h>
 #include <pluginlib/class_list_macros.h>
 #include "opencl_caffe/detector_gpu.h"
 #include "opencl_caffe/srv.h"
@@ -43,12 +44,25 @@ Srv::Srv(ros::NodeHandle& n)
 
 bool Srv::handleService(object_msgs::DetectObject::Request& req, object_msgs::DetectObject::Response& resp)
 {
-  sensor_msgs::ImagePtr image = boost::make_shared<sensor_msgs::Image>(req.image);
-  if (!detector_->runInference(image, resp.objects))
+  for (auto image_path : req.image_paths)
   {
-    ROS_ERROR("Detect object failed.");
-    return false;
+    cv_bridge::CvImage cv_image;
+    sensor_msgs::Image ros_image;
+    cv_image.image = cv::imread(image_path);
+    cv_image.encoding = "bgr8";
+    cv_image.toImageMsg(ros_image);
+
+    object_msgs::ObjectsInBoxes objects;
+
+    if (!detector_->runInference(boost::make_shared<sensor_msgs::Image>(ros_image), objects))
+    {
+      ROS_ERROR("Detect object failed.");
+      return false;
+    }
+
+    resp.objects.push_back(objects);
   }
+
   return true;
 }
 
