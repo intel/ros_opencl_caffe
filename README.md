@@ -1,4 +1,7 @@
 # ros_opencl_caffe
+# Warning: This repo is deprecated. For latest ROS wrapper for Intel GPU, please refer to our project ros_openvino_toolkit. 
+# See: https://github.com/intel/ros_openvino_toolkit!!
+
 ## Introduction
 OpenCL Caffe([clCaffe](https://github.com/01org/caffe/tree/inference-optimize)) is an OpenCL backend for Caffe from Intel&reg;. With inference optimized by Intel&reg; OpenCL, clCaffe can be used in most scene in high performance, like objects inference.
 
